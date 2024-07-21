@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+    </head>
+
+    <body>
+        <form action="docs/php/patient_login.php" method = "POST">
+            <h3>PATIENT LOGIN</h3>
+            <label for="fname">First Name:</label>
+            <input type="text" id="fname" name="fname" required><br><br>
+
+            <label for="lname">Last Name:</label>
+            <input type="text" id="lname" name="lname" required><br><br>
+
+            <label for="Code">Code:</label>
+            <input type="password" id="code" name="code" required><br><br>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <br><br>
+
+        <form action="docs/php/admin_login.php" method="POST">
+            <h3>ADMIN LOGIN</h3>
+            <label for="user">Username: </label>
+            <input type="text" id="user" name="user" required><br><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+
+            <button type="submit">Login</button>
+        </form>
+    </body>
+</html>
