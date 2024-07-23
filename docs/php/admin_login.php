@@ -1,42 +1,25 @@
 <?php
-session_start();
+require 'config.php';
 
-$host = 'localhost';
-$dbname = 'emergency_waitlist';
-$user = 'postgres';
-$password = 'sailor1';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['user'];
+    $password = $_POST['password'];
 
-try {
-    $db = pg_connect("host=localhost dbname=emergency_waitlist user=postgres password=sailor1"); 
-    $pdo = new PDO("pgsql:host=$host;dbname=$dbname",$user,$password);//Creates a connection to the database
+    // Prepare and execute the query to fetch admin details
+    $stmt = $pdo->prepare('SELECT * FROM administrator WHERE username = :username');
+    $stmt->execute(['username' => $username]);
+    $admin = $stmt->fetch();
 
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
-
-    $user = $_POST['user']; //Getting name from login
-    $password = $_POST['password']; //Getting code/password from login
-
-    $query = $pdo->prepare('SELECT * FROM admin WHERE user_name = :user');
-    $query->bindParam(':user', $user);
-    $query->execute();
-
-    $admin = $query->fetch(PDO::FETCH_ASSOC);
-
-    if ($admin && password_verify($password, $admin['passw'])) {
-        // Set session variables
-        $_SESSION['admin_id'] = $admin['id'];
-        $_SESSION['admin_username'] = $admin['username'];
-
-        
-        header('Location: admin_dashboard.php'); //Redirect to the admin page
-        exit();
+    // Verify the password (plain text comparison) and start session if valid
+    if ($admin && $password === $admin['password']) {
+        session_start();
+        $_SESSION['admin'] = $admin['username'];
+        header('Location: ../html/admin.html');
+        exit(); // Always good practice to exit after a header redirect
     } else {
-        
-        echo "Invalid admin username or password.";// Invalid credentials
+        echo 'Invalid credentials';
     }
-
-} catch (PDOException $e) {
-    echo 'Connection Failed: ', $e->getMessage();
 }
-    
 ?>
+
 

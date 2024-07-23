@@ -1,10 +1,56 @@
-<html>
-    <head>
-        
-    </head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
 
-    <body>
-        
-    </body>
+<body>
+    <header>
+        <h1>Emergency Waitlist Admin Dashboard</h1>
+    </header>
+    <div class="container">
+        <h3>Admin Dashboard</h3>
 
+        <form id="addPatientForm">
+            <h4>Add Patient</h4>
+            <label for="code">Code:</label>
+            <input type="text" id="code" name="code" required><br><br>
+
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name" required><br><br>
+
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name" required><br><br>
+
+            <label for="check_in">Check-In Time:</label>
+            <input type="time" id="check_in" name="check_in" required><br><br>
+
+            <label for="severity">Severity:</label>
+            <input type="number" id="severity" name="severity" required><br><br>
+
+            <button type="submit">Add Patient</button>
+        </form>
+
+        <table id="patientsTable">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Code</th>
+                    <th>Arrival Time</th>
+                    <th>Severity</th>
+                    <th>Wait Time</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <script src="../js/admin.js"></script>
+</body>
 </html>
