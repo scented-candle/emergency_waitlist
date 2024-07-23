@@ -4,7 +4,7 @@ This is the Emergency Waitlist program from Group 23
 
 To begin you will need to Create the database in postgres. This can be done by running the Setup.sql within postgres as shown below.:
 
-![postgres setup](images/postgres_steup)
+![postgres setup](images/postgres_steup.png)
 
 You will want to ensure You have copy and pasted the entire document! 
 
@@ -15,7 +15,12 @@ $db = 'emergency_waitlist';
 $user = 'postgres';
 $password = 'postgres';
 
-you will want to replace with the username and password of your potgres account!!
+you will want to replace with the username and password of your postgres account!!
+
+
+Then you will want to open a terminal at the folder and type the following code: php -S localhost:8000
+
+then open a browser and open http://localhost:8000
 
 Within Setup.sql we initalize there to be an admin with the username: admin_user and password: password. 
 You can use those to login to the admin site. 
