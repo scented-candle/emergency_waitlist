@@ -5,14 +5,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['user'];
     $password = $_POST['password'];
 
-    $stmt = $pdo->prepare('SELECT * FROM admins WHERE username = :username');
+    // Prepare and execute the query to fetch admin details
+    $stmt = $pdo->prepare('SELECT * FROM administrator WHERE username = :username');
     $stmt->execute(['username' => $username]);
     $admin = $stmt->fetch();
 
-    if ($admin && password_verify($password, $admin['password'])) {
+    // Verify the password (plain text comparison) and start session if valid
+    if ($admin && $password === $admin['password']) {
         session_start();
-        $_SESSION['admin'] = $admin['id'];
-        header('Location: admin.html');
+        $_SESSION['admin'] = $admin['username'];
+        header('Location: ../html/admin.html');
+        exit(); // Always good practice to exit after a header redirect
     } else {
         echo 'Invalid credentials';
     }
