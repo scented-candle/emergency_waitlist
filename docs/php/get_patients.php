@@ -8,7 +8,7 @@ if (!isset($_SESSION['admin'])) {
 }
 
 try {
-    $stmt = $pdo->query('SELECT * FROM patients');
+    $stmt = $pdo->query('SELECT * FROM patients ORDER BY severity DESC, check_in ASC');
     $patients = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     header('Content-Type: application/json');

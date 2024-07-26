@@ -1,33 +1,36 @@
 document.addEventListener('DOMContentLoaded', function() {
-    fetch('../php/get_patients.php')
-        .then(response => response.json())
-        .then(data => {
-            const tableBody = document.querySelector('#patientsTable tbody');
-            data.forEach(patient => {
-                const row = tableBody.insertRow();
-                row.insertCell(0).innerText = patient.first_name;
-                row.insertCell(1).innerText = patient.last_name;
-                row.insertCell(2).innerText = patient.code;
-                row.insertCell(3).innerText = patient.check_in;
-                row.insertCell(4).innerText = patient.severity;
-                row.insertCell(5).innerText = patient.wait_time;
-                row.insertCell(6).innerText = patient.status;
-                const actionsCell = row.insertCell(7);
-                const updateButton = document.createElement('button');
-                updateButton.innerText = 'Update Status';
-                updateButton.onclick = function() {
-                    updateStatus(patient.code);
-                };
-                const deleteButton = document.createElement('button');
-                deleteButton.innerText = 'Delete';
-                deleteButton.classList.add('delete');
-                deleteButton.onclick = function() {
-                    deletePatient(patient.code);
-                };
-                actionsCell.appendChild(updateButton);
-                actionsCell.appendChild(deleteButton);
+    // Function to fetch patients data and populate the table
+    function loadPatients() {
+        fetch('/docs/php/get_patients.php') // Adjust the path as needed
+            .then(response => response.json())
+            .then(patients => {
+                const tbody = document.getElementById('patientsTable').getElementsByTagName('tbody')[0];
+                tbody.innerHTML = ''; // Clear existing rows
+
+                patients.forEach(patient => {
+                    const row = document.createElement('tr');
+                    
+                    row.innerHTML = `
+                        <td>${patient.first_name}</td>
+                        <td>${patient.last_name}</td>
+                        <td>${patient.code}</td>
+                        <td>${patient.check_in}</td>
+                        <td>${patient.severity}</td>
+                        <td>${patient.wait_time}</td>
+                        <td>${patient.status}</td>
+                        
+                    `;
+                    
+                    tbody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching patient data:', error);
             });
-        });
+    }
+
+    // Load patients data when the page loads
+    loadPatients();
 });
 
 function updateStatus(patientCode) {
@@ -81,3 +84,97 @@ function deletePatient(patientCode) {
         });
     }
 }
+
+// Get the modals
+var addPatientModal = document.getElementById('addPatientModal');
+var checkOutPatientModal = document.getElementById('checkOutPatientModal');
+
+// Get the buttons that open the modals
+var addPatientBtn = document.getElementById('addPatientButton');
+var checkOutPatientBtn = document.getElementById('checkOutPatientButton');
+
+// Get the <span> elements that close the modals
+var addPatientSpan = addPatientModal.getElementsByClassName('close')[0];
+var checkOutPatientSpan = checkOutPatientModal.getElementsByClassName('close')[0];
+
+// When the user clicks the button, open the modal
+addPatientBtn.onclick = function() {
+    addPatientModal.style.display = 'block';
+}
+checkOutPatientBtn.onclick = function() {
+    checkOutPatientModal.style.display = 'block';
+}
+
+// When the user clicks on <span> (x), close the modal
+addPatientSpan.onclick = function() {
+    addPatientModal.style.display = 'none';
+}
+checkOutPatientSpan.onclick = function() {
+    checkOutPatientModal.style.display = 'none';
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == addPatientModal) {
+        addPatientModal.style.display = 'none';
+    }
+    if (event.target == checkOutPatientModal) {
+        checkOutPatientModal.style.display = 'none';
+    }
+}
+
+// Handle add patient form submission
+document.getElementById('addPatientForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting the traditional way
+
+    const formData = new FormData(this);
+
+    fetch('/docs/php/add_patient.php', {
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert('Patient added successfully');
+            this.reset();
+            loadPatients(); // Refresh the patients list
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An unexpected error occurred');
+    });
+});
+
+// Handle check-out patient form submission
+document.getElementById('checkOutPatientForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var formData = new FormData(this);
+
+    fetch('/docs/php/delete_patient.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert('Patient checked out successfully');
+            checkOutPatientModal.style.display = 'none';
+            this.reset();
+            location.reload(); // or update the table dynamically
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An unexpected error occurred');
+    });
+});
+
+
+

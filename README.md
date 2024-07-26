@@ -6,9 +6,9 @@ To begin you will need to Create the database in postgres. This can be done by r
 
 ![postgres setup](images/postgres_steup.png)
 
-You will want to ensure You have copy and pasted the entire document! 
+You will want to ensure You have copy and pasted the entire document!
 
-You will then to navigate to the  config.php and where it says 
+You will then to navigate to the  config.php and where it says
 
 $host = 'localhost';
 $db = 'emergency_waitlist';
@@ -22,12 +22,12 @@ Then you will want to open a terminal at the folder and type the following code:
 
 then open a browser and open http://localhost:8000
 
-Within Setup.sql we initalize there to be an admin with the username: admin_user and password: password. 
+Within Setup.sql we initalize there to be an admin with the username: admin_user and password: password.
 You can use those to login to the admin site. 
-From the admin Site you can update the status of a patient, add a new patient or delete a patient. 
-When a patient is deleted or there status is changed from waiting, the wait time of the other patients will update accordingly. 
+From the admin Site you can update the status of a patient, add a new patient or delete a patient.
+When a patient is deleted or there status is changed from waiting, the wait time of the other patients will update accordingly.
 
-The wait time for each patient is calculated by 10*severity of injury of every person waiting in front of them. 
+The wait time for each patient is calculated by 10*severity of injury of every person waiting in front of them.
 
 You can also login via the patient site
 

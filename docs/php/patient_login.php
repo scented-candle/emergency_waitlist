@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($patient) {
         session_start();
         $_SESSION['patient'] = $patient['id'];
-        header('Location: patient.html');
+        header('Location: /docs/html/patient.html');
     } else {
         echo 'Invalid credentials';
     }

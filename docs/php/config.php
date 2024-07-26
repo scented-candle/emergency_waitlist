@@ -3,7 +3,7 @@
 $host = 'localhost';
 $db = 'emergency_waitlist';
 $user = 'postgres';
-$password = 'postgres';
+$password = 'sailor1';
 
 try {
     $pdo = new PDO("pgsql:host=$host;port=5432;dbname=$db;", $user, $password);

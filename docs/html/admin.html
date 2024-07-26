@@ -6,51 +6,98 @@
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="../css/styles.css">
 </head>
-
 <body>
     <header>
         <h1>Emergency Waitlist Admin Dashboard</h1>
     </header>
-    <div class="container">
-        <h3>Admin Dashboard</h3>
+    <div class="page-container">
+        <div class="sidebar">
+            <div class="profile-container">
+                <img src="../images/logo.png" alt="Logo" class="profile-picture">
+            </div>
+            <center>
+                <p>Welcome Admin</p>
+                <p>Current WaitTime: </p>
 
-        <form id="addPatientForm">
-            <h4>Add Patient</h4>
-            <label for="code">Code:</label>
-            <input type="text" id="code" name="code" required><br><br>
+                <button id="addPatientButton">Check-In Patient</button><br>
+                <button id="checkOutPatientButton">Check Out Patient</button>
+            </center>
+        </div>
+        <div class="main-content">
+            <div class="container">
+                <h3>Admin Dashboard</h3>
 
-            <label for="first_name">First Name:</label>
-            <input type="text" id="first_name" name="first_name" required><br><br>
+                <table id="patientsTable">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Code</th>
+                            <th>Arrival Time</th>
+                            <th>Severity</th>
+                            <th>Wait Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-            <label for="last_name">Last Name:</label>
-            <input type="text" id="last_name" name="last_name" required><br><br>
-
-            <label for="check_in">Check-In Time:</label>
-            <input type="time" id="check_in" name="check_in" required><br><br>
-
-            <label for="severity">Severity:</label>
-            <input type="number" id="severity" name="severity" required><br><br>
-
-            <button type="submit">Add Patient</button>
-        </form>
-
-        <table id="patientsTable">
-            <thead>
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Code</th>
-                    <th>Arrival Time</th>
-                    <th>Severity</th>
-                    <th>Wait Time</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+
+    <div id="addPatientModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <center><h4>Check-In</h4></center>
+            <form id="addPatientForm" action="/docs/php/add_patient.php"method="POST">
+                <label for="code">Code:</label>
+                <input type="text" id="code" name="code" required><br><br>
+
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" required><br><br>
+
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" required><br><br>
+
+                <label for="check_in">Check-In Time:</label>
+                <input type="time" id="check_in" name="check_in" required><br><br>
+
+                <label for="severity">Severity:</label>
+                <div class="severity-group">
+                    <input type="radio" id="one_severity" name="severity" value="1" required>
+                    <label for="one_severity">Urgent W/O Danger</label>
+                    <input type="radio" id="two_severity" name="severity" value="2" required>
+                    <label for="two_severity">Emergent W/O Danger</label>
+                    <input type="radio" id="three_severity" name="severity" value="3" required>
+                    <label for="three_severity">Emergent W/ Danger</label>
+                    <input type="radio" id="four_severity" name="severity" value="4" required>
+                    <label for="four_severity">High Risk</label>
+                    <input type="radio" id="five_severity" name="severity" value="5" required>
+                    <label for="five_severity">Life Saving</label>   
+                </div><br><br>
+                
+    
+                
+
+                <button type="submit">Add Patient</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="checkOutPatientModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h4>Check Out Patient</h4>
+            <form id="checkOutPatientForm">
+                <label for="check_out_code">Patient Code:</label>
+                <input type="text" id="check_out_code" name="check_out_code" required><br><br>
+                <button type="submit">Check Out</button>
+            </form>
+        </div>
+    </div>
+
     <script src="../js/admin.js"></script>
 </body>
 </html>
