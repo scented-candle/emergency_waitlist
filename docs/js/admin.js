@@ -1,33 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Function to fetch patients data and populate the table
-    function loadPatients() {
-        fetch('/docs/php/get_patients.php') // Adjust the path as needed
-            .then(response => response.json())
-            .then(patients => {
-                const tbody = document.getElementById('patientsTable').getElementsByTagName('tbody')[0];
-                tbody.innerHTML = ''; // Clear existing rows
-
-                patients.forEach(patient => {
-                    const row = document.createElement('tr');
-                    
-                    row.innerHTML = `
-                        <td>${patient.first_name}</td>
-                        <td>${patient.last_name}</td>
-                        <td>${patient.code}</td>
-                        <td>${patient.check_in}</td>
-                        <td>${patient.severity}</td>
-                        <td>${patient.wait_time}</td>
-                        <td>${patient.status}</td>
-                        
-                    `;
-                    
-                    tbody.appendChild(row);
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching patient data:', error);
-            });
-    }
+    // 
 
     // Load patients data when the page loads
     loadPatients();
@@ -59,31 +31,6 @@ function updateStatus(patientCode) {
     }
 }
 
-function deletePatient(patientCode) {
-    if (confirm('Are you sure you want to delete the patient with code ' + patientCode + '?')) {
-        fetch('../php/delete_patient.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ code: patientCode })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Patient deleted successfully!');
-                location.reload(); // Reload the page to see the updated patient list
-            } else {
-                console.error('Error deleting patient:', data.message);
-                alert('Failed to delete patient.');
-            }
-        })
-        .catch(error => {
-            console.error('Error deleting patient:', error);
-            alert('An error occurred while deleting patient.');
-        });
-    }
-}
 
 // Get the modals
 var addPatientModal = document.getElementById('addPatientModal');
@@ -135,13 +82,12 @@ document.getElementById('addPatientForm').addEventListener('submit', function(ev
     })
     .then(response => response.json())
     .then(data => {
-        if (data.status === 'success') {
-            alert('Patient added successfully');
-            this.reset();
-            loadPatients(); // Refresh the patients list
-        } else {
-            alert('Error: ' + data.message);
-        }
+
+        alert('Patient added successfully');
+        addPatientModal.style.display = 'none';
+        this.reset();
+        loadPatients();
+
     })
     .catch(error => {
         console.error('Error:', error);
@@ -161,14 +107,10 @@ document.getElementById('checkOutPatientForm').addEventListener('submit', functi
     })
     .then(response => response.json())
     .then(data => {
-        if (data.status === 'success') {
-            alert('Patient checked out successfully');
-            checkOutPatientModal.style.display = 'none';
-            this.reset();
-            location.reload(); // or update the table dynamically
-        } else {
-            alert('Error: ' + data.message);
-        }
+        alert('Patient removed successfully');
+        checkOutPatientModal.style.display = 'none';
+        this.reset();
+        loadPatients(); 
     })
     .catch(error => {
         console.error('Error:', error);
@@ -176,5 +118,32 @@ document.getElementById('checkOutPatientForm').addEventListener('submit', functi
     });
 });
 
+//Function to fetch patients data and populate the table
+function loadPatients() { 
+    fetch('/docs/php/get_patients.php') // Adjust the path as needed
+        .then(response => response.json())
+        .then(patients => {
+             const tbody = document.getElementById('patientsTable').getElementsByTagName('tbody')[0];
+            tbody.innerHTML = ''; // Clear existing rows
 
-
+            patients.forEach(patient => {
+                const row = document.createElement('tr');
+                    
+                row.innerHTML = `
+                    <td>${patient.first_name}</td>
+                    <td>${patient.last_name}</td>
+                    <td>${patient.code}</td>
+                    <td>${patient.check_in}</td>
+                    <td>${patient.severity}</td>
+                    <td>${patient.wait_time}</td>
+                    <td>${patient.status}</td>
+                        
+                    `;
+                    
+                tbody.appendChild(row);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching patient data:', error);
+        });
+}

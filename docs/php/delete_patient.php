@@ -9,22 +9,22 @@ if (!isset($_SESSION['admin'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the JSON input
-    $input = json_decode(file_get_contents('php://input'), true);
-    $code = $input['code'];
+    if (isset($_POST['code'])) {
+        $code = $_POST['code'];
+        
+        // Delete the patient
+        $stmt = $pdo->prepare('DELETE FROM patients WHERE code = :code');
+        $result = $stmt->execute(['code' => $code]);
 
-    // Delete the patient
-    $stmt = $pdo->prepare('DELETE FROM patients WHERE code = :code');
-    $result = $stmt->execute(['code' => $code]);
-
-    if ($result) {
-        echo json_encode(['success' => true]);
+        if ($result) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Failed to delete patient']);
+        }
     } else {
-        echo json_encode(['success' => false, 'message' => 'Failed to delete patient']);
+        echo json_encode(['success' => false, 'message' => 'Code is required']);
     }
 } else {
     echo json_encode(['success' => false, 'message' => 'Invalid request method']);
 }
 ?>
-
-

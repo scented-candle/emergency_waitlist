@@ -40,7 +40,7 @@
                         </tr>
                     </thead>
                     <tbody>
-
+                        <!-- Table rows will be inserted here by JavaScript -->
                     </tbody>
                 </table>
             </div>
@@ -51,9 +51,9 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <center><h4>Check-In</h4></center>
-            <form id="addPatientForm" action="/docs/php/add_patient.php"method="POST">
-                <label for="code">Code:</label>
-                <input type="text" id="code" name="code" required><br><br>
+            <form id="addPatientForm" action="/docs/php/add_patient.php" method="POST">
+                <label for="add_patient_code">Code:</label>
+                <input type="text" id="add_patient_code" name="code" required><br><br>
 
                 <label for="first_name">First Name:</label>
                 <input type="text" id="first_name" name="first_name" required><br><br>
@@ -77,10 +77,6 @@
                     <input type="radio" id="five_severity" name="severity" value="5" required>
                     <label for="five_severity">Life Saving</label>   
                 </div><br><br>
-                
-    
-                
-
                 <button type="submit">Add Patient</button>
             </form>
         </div>
@@ -90,9 +86,9 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h4>Check Out Patient</h4>
-            <form id="checkOutPatientForm">
-                <label for="check_out_code">Patient Code:</label>
-                <input type="text" id="check_out_code" name="check_out_code" required><br><br>
+            <form id="checkOutPatientForm" action="/docs/php/delete_patient.php" method="POST">
+                <label for="check_out_patient_code">Patient Code:</label>
+                <input type="text" id="check_out_patient_code" name="code" required><br><br>
                 <button type="submit">Check Out</button>
             </form>
         </div>
