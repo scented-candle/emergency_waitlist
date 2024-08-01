@@ -120,15 +120,26 @@ document.getElementById('checkOutPatientForm').addEventListener('submit', functi
 
 //Function to fetch patients data and populate the table
 function loadPatients() { 
-    fetch('/docs/php/get_patients.php') // Adjust the path as needed
+    // Fetch total wait time
+    fetch('/docs/php/admin_total_waittime.php')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('totalWaitTime').innerText = data.total_wait_time;
+        })
+        .catch(error => {
+            console.error('Error fetching total wait time:', error);
+        });
+
+    // Fetch and display patients
+    fetch('/docs/php/get_patients.php')
         .then(response => response.json())
         .then(patients => {
-             const tbody = document.getElementById('patientsTable').getElementsByTagName('tbody')[0];
+            const tbody = document.getElementById('patientsTable').getElementsByTagName('tbody')[0];
             tbody.innerHTML = ''; // Clear existing rows
 
             patients.forEach(patient => {
                 const row = document.createElement('tr');
-                    
+
                 row.innerHTML = `
                     <td>${patient.first_name}</td>
                     <td>${patient.last_name}</td>
@@ -137,9 +148,8 @@ function loadPatients() {
                     <td>${patient.severity}</td>
                     <td>${patient.wait_time}</td>
                     <td>${patient.status}</td>
-                        
-                    `;
-                    
+                `;
+
                 tbody.appendChild(row);
             });
         })
