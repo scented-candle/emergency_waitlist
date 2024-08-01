@@ -107,10 +107,14 @@ document.getElementById('checkOutPatientForm').addEventListener('submit', functi
     })
     .then(response => response.json())
     .then(data => {
-        alert('Patient removed successfully');
+        if (data.success) {
+            alert('Patient removed successfully');
+        } else {
+            alert(data.message || 'No patient found with the given ID');
+        }
         checkOutPatientModal.style.display = 'none';
         this.reset();
-        loadPatients(); 
+        loadPatients();  
     })
     .catch(error => {
         console.error('Error:', error);
