@@ -188,7 +188,7 @@ button.delete:hover {
     cursor: pointer;
 }
 
-button#addPatientButton, button#checkOutPatientButton {
+button#addPatientButton, button#checkOutPatientButton, button#updateStatusButton {
     padding: 10px;
     background-color: #4CAF50;
     color: white;
@@ -200,7 +200,7 @@ button#addPatientButton, button#checkOutPatientButton {
     margin-bottom: 20px;
 }
 
-button#addPatientButton:hover, button#checkOutPatientButton:hover {
+button#addPatientButton:hover, button#checkOutPatientButton:hover, button#updateStatusButton:hover  {
     background-color: #45a049;
 }
 
@@ -217,3 +217,29 @@ button#addPatientButton:hover, button#checkOutPatientButton:hover {
 .severity-group label {
     margin-right: 15px;
 }
+
+/* Styles for the patient log-in page */
+.patient-dashboard {
+    background: #fff;
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-top: 50px; /* Add some margin to separate from the top */
+}
+
+.patient-dashboard h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.patient-dashboard p {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+}
+
+.patient-dashboard #waitTime {
+    font-weight: bold;
+    color: #e74c3c;
+}
+

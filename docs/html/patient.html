@@ -1,14 +1,43 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Dashboard</title>
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
-
 <body>
-    <h3>Patient Dashboard</h3>
-    <p id="welcomeMessage"></p>
-    <p>Approximate wait time: <span id="waitTime"></span> minutes</p>
-    <script src="../js/patient.js"></script>
+    <header>
+        <h1>Patient Dashboard</h1>
+    </header>
+    <div class="container">
+        <p id="welcomeMessage"></p>
+        <p>Approximate wait time: <span id="waitTime"></span> minutes</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/docs/php/patient_dashboard.php')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data); // Add this line to debug the data
+                    if (data.first_name && data.last_name && data.wait_time !== undefined) {
+                        document.getElementById('welcomeMessage').innerText = 'Welcome ' + data.first_name + ' ' + data.last_name;
+                        document.getElementById('waitTime').innerText = data.wait_time;
+                    } else {
+                        document.getElementById('welcomeMessage').innerText = 'Error: ' + (data.message || 'Unknown error');
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('welcomeMessage').innerText = 'Error: ' + error.message;
+                    console.error('Fetch error:', error); // Add this line to debug fetch errors
+                });
+        });
+    </script>
 </body>
 </html>
