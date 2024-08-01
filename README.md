@@ -8,7 +8,7 @@ From the developer's perspective:
 
 To begin you will need to Create the database in Postgres. This can be done by running the Setup.sql within Postgres as shown below.:
 
-![postgres setup](images/postgres_steup.png)
+![postgres setup](images/postgres_setup.png)
 
 You will want to ensure You have copied and pasted the entire document!
 
