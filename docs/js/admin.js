@@ -35,14 +35,17 @@ function updateStatus(patientCode) {
 // Get the modals
 var addPatientModal = document.getElementById('addPatientModal');
 var checkOutPatientModal = document.getElementById('checkOutPatientModal');
+var updateStatusModal = document.getElementById('updateStatusModal');
 
 // Get the buttons that open the modals
 var addPatientBtn = document.getElementById('addPatientButton');
 var checkOutPatientBtn = document.getElementById('checkOutPatientButton');
+var updateStatusBtn = document.getElementById('updateStatusButton')
 
 // Get the <span> elements that close the modals
 var addPatientSpan = addPatientModal.getElementsByClassName('close')[0];
 var checkOutPatientSpan = checkOutPatientModal.getElementsByClassName('close')[0];
+var updateStatusSpan = updateStatusModal.getElementsByClassName('close')[0];
 
 // When the user clicks the button, open the modal
 addPatientBtn.onclick = function() {
@@ -50,6 +53,9 @@ addPatientBtn.onclick = function() {
 }
 checkOutPatientBtn.onclick = function() {
     checkOutPatientModal.style.display = 'block';
+}
+updateStatusBtn.onclick = function() {
+    updateStatusModal.style.display = 'block';
 }
 
 // When the user clicks on <span> (x), close the modal
@@ -59,6 +65,9 @@ addPatientSpan.onclick = function() {
 checkOutPatientSpan.onclick = function() {
     checkOutPatientModal.style.display = 'none';
 }
+updateStatusSpan.onclick = function() {
+    updateStatusModal.style.display = 'none';
+}
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
@@ -67,6 +76,9 @@ window.onclick = function(event) {
     }
     if (event.target == checkOutPatientModal) {
         checkOutPatientModal.style.display = 'none';
+    }
+    if (event.target == updateStatusModal) {
+        updateStatusModal.style.display = 'none';
     }
 }
 
@@ -115,6 +127,31 @@ document.getElementById('checkOutPatientForm').addEventListener('submit', functi
         checkOutPatientModal.style.display = 'none';
         this.reset();
         loadPatients();  
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An unexpected error occurred');
+    });
+});
+
+document.getElementById('updateStatusForm').addEventListener('submit', function(e){
+    e.preventDefault();
+
+    const formData = new FormData(this);
+
+    fetch('/docs/php/update_status.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Patient status updated successfully');
+            updateStatusModal.style.display = 'none';
+            loadPatients(); 
+        } else {
+            alert('Error: ' + (data.message || 'An unexpected error occurred'));
+        }
     })
     .catch(error => {
         console.error('Error:', error);

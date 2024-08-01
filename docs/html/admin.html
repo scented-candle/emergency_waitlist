@@ -20,7 +20,8 @@
                 <p>Current WaitTime: <span id="totalWaitTime"></span> minutes</p>
 
                 <button id="addPatientButton">Check-In Patient</button><br>
-                <button id="checkOutPatientButton">Check Out Patient</button>
+                <button id="checkOutPatientButton">Check Out Patient</button><br>
+                <button id="updateStatusButton">Update Patient Status</button> 
             </center>
         </div>
         <div class="main-content">
@@ -93,6 +94,24 @@
             </form>
         </div>
     </div>
+
+    <div id="updateStatusModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h4>Update Patient Status</h4>
+            <form id="updateStatusForm" action="/docs/php/update_status.php" method="POST">
+                <label for="code">Patient Code:</label>
+                <input type="text" id="updateCode" name="code" required><br><br>
+                <label for="status">Status:</label>
+                <select id="status" name="status" required>
+                    <option value="waiting">Waiting</option>
+                    <option value="under_treatment">Under Treatment</option>
+                </select><br><br>
+                <button type="submit">Update Status</button>
+            </form>
+        </div>
+    </div>
+    
 
     <script src="../js/admin.js"></script>
 </body>

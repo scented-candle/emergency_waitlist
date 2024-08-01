@@ -188,7 +188,7 @@ button.delete:hover {
     cursor: pointer;
 }
 
-button#addPatientButton, button#checkOutPatientButton {
+button#addPatientButton, button#checkOutPatientButton, button#updateStatusButton {
     padding: 10px;
     background-color: #4CAF50;
     color: white;
@@ -200,7 +200,7 @@ button#addPatientButton, button#checkOutPatientButton {
     margin-bottom: 20px;
 }
 
-button#addPatientButton:hover, button#checkOutPatientButton:hover {
+button#addPatientButton:hover, button#checkOutPatientButton:hover, button#updateStatusButton:hover  {
     background-color: #45a049;
 }
 
@@ -242,3 +242,4 @@ button#addPatientButton:hover, button#checkOutPatientButton:hover {
     font-weight: bold;
     color: #e74c3c;
 }
+
